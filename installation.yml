@@ -1,0 +1,40 @@
+---
+- name: Install Docker
+  hosts: all
+  become: yes  
+
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian' 
+
+    - name: Install required packages for Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+      when: ansible_os_family == 'Debian' 
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+      when: ansible_os_family == 'Debian'  
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+      when: ansible_os_family == 'Debian'  
+
+    - name: Update apt packages (again)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'  
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+      when: ansible_os_family == 'Debian'  
