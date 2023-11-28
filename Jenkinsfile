@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'JSlave'
+        label 'jslave'
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
                 script {
                     //Job 2: Push Ansible configuration on the test server to install Docker
                     sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansible-repo"
-                    sh "ssh ubuntu@ip-172-31-33-161 'ansible-playbook /tmp/ansible-repo/installation.yml'"
+                    sh "ssh ubuntu@ip-172-31-27-9 'ansible-playbook /tmp/ansible-repo/installation.yml'"
                     sh "rm -rf /tmp/ansible-repo"
                 }
             }
