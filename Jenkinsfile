@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'JSlave'
+    }
 
     stages {
         stage('Install and configure puppet agent') {
