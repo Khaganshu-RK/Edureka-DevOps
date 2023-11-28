@@ -23,8 +23,8 @@ pipeline {
             steps {
                 script {
                     //Job 2: Push Ansible configuration on the test server to install Docker
-                    sh "git clone ${ansibleRepo} /tmp/ansible-repo"
-                    sh "ssh ${testServer} 'ansible-playbook /tmp/ansible-repo/website/installation.yml'"
+                    sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansible-repo"
+                    sh "ssh ubuntu@ip-172-31-33-161 'ansible-playbook /tmp/ansible-repo/website/installation.yml'"
                     sh "rm -rf /tmp/ansible-repo"
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         stage('Build and deploy PHP Docker container') {
             steps {
                 // Job 3: Pull PHP website and Dockerfile from Git repo, build, and deploy container
-                git branch: 'main', url: '<YOUR_GIT_REPO_URL>'
+                git branch: 'main', url: 'https://github.com/Khaganshu-RK/Edureka-DevOps.git'
                 sh 'docker build -t php-website .'
                 sh 'docker run -d -p 80:80 php-website'
             }
