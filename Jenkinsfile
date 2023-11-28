@@ -25,10 +25,12 @@ pipeline {
             steps {
                 script {
                     //Job 2: Push Ansible configuration on the test server to install Docker
-                    sh "rm -rf /tmp/ansible-repo"
-                    sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansible-repo"
-                    sh "ssh ubuntu@ip-172-31-27-9 'ansible-playbook /tmp/ansible-repo/installation.yml'"
-                    sh "rm -rf /tmp/ansible-repo"
+                    def testServer = 'ubuntu@ip-172-31-27-9'
+                    sh "rm -rf /tmp/ansibletemp"
+                    sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansibletemp"
+                    //sh "ssh ubuntu@ip-172-31-27-9 'ansible-playbook /tmp/ansibletemp/installation.yml'"
+                    sh "ssh ${testServer} 'ansible-playbook /tmp/ansibletemp/installation.yml'"
+                    sh "rm -rf /tmp/ansibletemp"
                 }
             }
         }
