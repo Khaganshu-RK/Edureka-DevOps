@@ -38,12 +38,8 @@
       when: ansible_os_family == 'Debian'  
 
     - name: Install Docker
-      apt-get:
-        name: 
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
-        state: present
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
       when: ansible_os_family == 'Debian'  
