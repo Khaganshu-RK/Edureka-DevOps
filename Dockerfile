@@ -1,4 +1,4 @@
-FROM devopsedu/webapp
-ADD website /var/www/html
-RUN rm /var/www/html/index.html
-CMD [ "apachectl -D FOREGROUND" ]
+FROM php:7.4-apache
+WORKDIR /var/www/html
+COPY website/. .
+CMD ["apache2-foreground"]
