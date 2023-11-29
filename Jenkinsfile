@@ -76,6 +76,7 @@ pipeline {
 //                    sh 'docker image prune -a --force --filter "until=5m"'
 //                }
 //            }
-//        }
-//    }    
-//}
+        }
+
+    }    
+}
