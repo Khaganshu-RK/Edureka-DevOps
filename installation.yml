@@ -101,7 +101,7 @@
     - name: Add remote "ubuntu" user to "docker" group
       user:
         name: ubuntu
-        group: docker
+        groups: docker
         append: yes
 
     - name: Start Docker service
