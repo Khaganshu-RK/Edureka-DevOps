@@ -44,6 +44,7 @@ pipeline {
         stage('Build and deploy PHP Docker container') {
             steps {
                 // Job 3: Pull PHP website and Dockerfile from Git repo, build, and deploy container
+                sh "rm -rf /tmp/php-web ||:"
                 sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
                 sh "cd /tmp/php-web"
                 sh 'docker build -t php-website .'
