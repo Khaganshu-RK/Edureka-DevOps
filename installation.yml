@@ -93,6 +93,17 @@
 #        groups: docker
 #        append: yes
 
+    - name: Create "docker" group
+      group:
+        name: "{{ docker_group }}"
+        state: present
+    
+    - name: Add remote "ubuntu" user to "docker" group
+      user:
+        name: "{{ remote_user }}"
+        group: "{{ docker_group }}"
+        append: yes
+
     - name: Start Docker service
       systemd:
         name: docker
