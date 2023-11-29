@@ -38,7 +38,7 @@
       when: ansible_os_family == 'Debian'  
 
     - name: Install Docker
-      apt:
+      apt-get:
         name: docker-ce
         state: present
       when: ansible_os_family == 'Debian'  
