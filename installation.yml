@@ -2,8 +2,6 @@
 - name: Install Docker
   hosts: all
   become: yes
-  become_user: ubuntu
-  become_method: sudo
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'  
 
