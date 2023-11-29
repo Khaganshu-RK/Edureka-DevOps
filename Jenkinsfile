@@ -25,12 +25,12 @@ pipeline {
             steps {
                 script {
                     //Job 2: Push Ansible configuration on the test server to install Docker
-                    def testServer = 'ubuntu@ip-172-31-17-187'
-                    sh "whoami"
+                    //def testServer = 'ubuntu@ip-172-31-17-187'
                     sh "rm -rf /tmp/ansibletemp"
                     sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansibletemp"
                     //sh "ssh ubuntu@ip-172-31-27-9 'ansible-playbook /tmp/ansibletemp/installation.yml'"
-                    sh "ssh -o StrictHostKeyChecking=no ${testServer} 'ansible-playbook /tmp/ansibletemp/installation.yml'"
+                    sh "scp /tmp/ansibletemp/installation.yml ubuntu@ip-172-31-24-180:~/"
+                    //sh "ssh -o StrictHostKeyChecking=no ${testServer} 'ansible-playbook /tmp/ansibletemp/installation.yml'"
                     //sh "ssh ubuntu@ip-172-31-17-187 'echo hi'"
                     sh "rm -rf /tmp/ansibletemp"
                 }
