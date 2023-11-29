@@ -38,7 +38,7 @@
       when: ansible_os_family == 'Debian'  
 
     - name: Install Docker
-      command: >
-        curl -fsSL https://get.docker.com -o get-docker.sh &&
-        sh get-docker.sh
+      apt:
+        name: docker-ce
+        state: present
       when: ansible_os_family == 'Debian'  
