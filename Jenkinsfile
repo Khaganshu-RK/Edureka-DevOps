@@ -48,8 +48,8 @@ pipeline {
                         sh 'docker build -t php-website .'
                         sh 'docker run -d -p 8020:80 php-website'
                     } catch (Exception e) {
-                        sh 'docker container prune --force --filter "until=2m"'
-                        sh 'docker image prune -a --force --filter "until=2m"'
+                        sh 'docker container prune --force'
+                        sh 'docker image prune -a --force'
                         echo "Deployment failed: ${e.message}"
                         currentBuild.result = 'FAILURE'
                     }
