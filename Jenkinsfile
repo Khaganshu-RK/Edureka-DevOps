@@ -31,7 +31,7 @@ pipeline {
                     sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/ansibletemp"
                     //sh "ssh ubuntu@ip-172-31-27-9 'ansible-playbook /tmp/ansibletemp/installation.yml'"
                     //sh "ssh ${testServer} 'ansible-playbook /tmp/ansibletemp/installation.yml'"
-                    sh "ssh ubuntu@ip-172-31-17-187 'echo hi'"
+                    sh "ssh -o StrictHostKeyChecking=no ubuntu@ip-172-31-17-187 'echo hi'"
                     sh "rm -rf /tmp/ansibletemp"
                 }
             }
