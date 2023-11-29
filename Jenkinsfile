@@ -46,7 +46,7 @@ pipeline {
                         sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
                         sh "cd /tmp/php-web"
                         sh 'docker build -t php-website .'
-                        sh 'docker run -d -p 8020:80 php-website'
+                        sh 'docker run -d -p 8010:80 php-website'
                     } catch (Exception e) {
                         sh 'docker container prune --force'
                         sh 'docker image prune -a --force'
