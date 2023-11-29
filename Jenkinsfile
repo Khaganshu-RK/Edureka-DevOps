@@ -37,25 +37,45 @@ pipeline {
             }
         }
 
-        stage('Cleanup on failure') {
+        stage('Build and deploy PHP Docker container with try catch block') {
             steps {
-                // Job 3: Delete the running container on the test server if Job 3 fails
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker container prune --force --filter "until=3m"'
-                    sh 'docker image prune -a --force --filter "until=5m"'
+                // Job 3: Pull PHP website and Dockerfile from Git repo, build, and deploy container
+                script {
+                    try {
+                        sh "rm -rf /tmp/php-web ||:"
+                        sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
+                        sh "cd /tmp/php-web"
+                        sh 'docker build -t php-website .'
+                        sh 'docker run -d -p 8020:80 php-website'
+                    } catch (Exception e) {
+                        sh 'docker container prune --force --filter "exited=0"'
+                        sh 'docker image prune -a --force'
+                        echo "Deployment failed: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                    }
                 }
             }
         }
         
-        stage('Build and deploy PHP Docker container') {
-            steps {
-                // Job 4: Pull PHP website and Dockerfile from Git repo, build, and deploy container
-                sh "rm -rf /tmp/php-web ||:"
-                sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
-                sh "cd /tmp/php-web"
-                sh 'docker build -t php-website .'
-                sh 'docker run -d -p 8010:80 php-website'
-            }
-        }
-    }
-}
+//        stage('Build and deploy PHP Docker container') {
+//            steps {
+//                // Job 3: Pull PHP website and Dockerfile from Git repo, build, and deploy container
+//                sh "rm -rf /tmp/php-web ||:"
+//                sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
+//                sh "cd /tmp/php-web"
+//                sh 'docker build -t php-website .'
+//                sh 'docker run -d -p 8010:80 php-website'
+//            }
+//        }
+//
+//        stage('Cleanup on failure') {
+//            steps {
+//                // Job 4: Delete the running container on the test server if Job 4 fails
+//                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+//                    sh 'docker container prune --force --filter "until=3m"'
+//                    sh 'docker image prune -a --force --filter "until=5m"'
+//                }
+//            }
+//        }
+//    }    
+//}
