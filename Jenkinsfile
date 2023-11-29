@@ -56,8 +56,8 @@ pipeline {
             steps {
                 // Job 4: Delete the running container on the test server if Job 3 fails
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh 'docker stop $(docker ps -q --filter ancestor=php-website)'
-                    sh 'docker rm $(docker ps -aq --filter ancestor=php-website)'
+                    sh 'docker container prune --force --filter "until=3m"'
+                    sh 'docker image prune -a --force --filter "until=5m"'
                 }
             }
         }
