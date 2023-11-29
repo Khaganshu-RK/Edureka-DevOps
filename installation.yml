@@ -1,49 +1,3 @@
-#---
-#- name: Install Docker
-#  hosts: all
-#  become: yes
-#  vars:
-#    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'  
-#
-#  tasks:
-#    - name: Update apt packages
-#      apt:
-#        update_cache: yes
-#      when: ansible_os_family == 'Debian' 
-#
-#    - name: Install required packages for Docker
-#      apt:
-#        name:
-#          - apt-transport-https
-#          - ca-certificates
-#          - curl
-#          - software-properties-common
-#      when: ansible_os_family == 'Debian' 
-#
-#    - name: Add Docker GPG key
-#      get_url:
-#        url: https://download.docker.com/linux/ubuntu/gpg
-#        dest: /usr/share/keyrings/docker-archive-keyring.gpg
-#      when: ansible_os_family == 'Debian'  
-#
-#    - name: Add Docker repository
-#      command: >
-#        echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" |
-#        tee /etc/apt/sources.list.d/docker.list
-#      when: ansible_os_family == 'Debian'  
-#
-#    - name: Update apt packages (again)
-#      apt:
-#        update_cache: yes
-#      when: ansible_os_family == 'Debian'  
-#
-#    - name: Install Docker
-#      apt:
-#        name: docker-ce
-#        state: latest
-#        update_cache: true
-#      when: ansible_os_family == 'Debian' 
-#
 ---
 - name: Install Docker
   hosts: all
@@ -87,12 +41,6 @@
         name: docker-ce
         state: present
 
-#    - name: Add user to the docker group
-#      user:
-#        name: "{{ ansible_user }}"
-#        groups: docker
-#        append: yes
-
     - name: Create "docker" group
       group:
         name: docker
@@ -109,4 +57,3 @@
         name: docker
         state: started
         enabled: yes
- 
