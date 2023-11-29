@@ -37,24 +37,24 @@ pipeline {
             }
         }
 
-        stage('Build and deploy PHP Docker container') {
-            steps {
-                // Job 3: Pull PHP website and Dockerfile from Git repo, build, and deploy container
-                sh "rm -rf /tmp/php-web ||:"
-                sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
-                sh "cd /tmp/php-web"
-                sh 'docker build -t php-website .'
-                sh 'docker run -d -p 80:80 php-website'
-            }
-        }
-
         stage('Cleanup on failure') {
             steps {
-                // Job 4: Delete the running container on the test server if Job 3 fails
+                // Job 3: Delete the running container on the test server if Job 3 fails
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh 'docker container prune --force --filter "until=3m"'
                     sh 'docker image prune -a --force --filter "until=5m"'
                 }
+            }
+        }
+        
+        stage('Build and deploy PHP Docker container') {
+            steps {
+                // Job 4: Pull PHP website and Dockerfile from Git repo, build, and deploy container
+                sh "rm -rf /tmp/php-web ||:"
+                sh "git clone https://github.com/Khaganshu-RK/Edureka-DevOps.git /tmp/php-web"
+                sh "cd /tmp/php-web"
+                sh 'docker build -t php-website .'
+                sh 'docker run -d -p 8010:80 php-website'
             }
         }
     }
