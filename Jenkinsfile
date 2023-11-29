@@ -48,8 +48,8 @@ pipeline {
                         sh 'docker build -t php-website .'
                         sh 'docker run -d -p 8020:80 php-website'
                     } catch (Exception e) {
-                        sh 'docker container prune --force --filter "until=1m"'
-                        sh 'docker image prune -a --force'
+                        sh 'docker container prune --force --filter "until=2m"'
+                        sh 'docker image prune -a --force --filter "until=2m"'
                         echo "Deployment failed: ${e.message}"
                         currentBuild.result = 'FAILURE'
                     }
@@ -70,7 +70,7 @@ pipeline {
 //
 //        stage('Cleanup on failure') {
 //            steps {
-//                // Job 4: Delete the running container on the test server if Job 4 fails
+//                // Job 4: Delete the running container on the test server if Job 3 fails
 //                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
 //                    sh 'docker container prune --force --filter "until=3m"'
 //                    sh 'docker image prune -a --force --filter "until=5m"'
